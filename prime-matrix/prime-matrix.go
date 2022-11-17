@@ -5,13 +5,13 @@ import (
 	"math"
 )
 
-func isPrime(num int) bool {
-	if num&0x1 == 0 {
+func isPrime(value int) bool {
+	if (value & 0x1) == 0 {
 		return false
 	}
-	limit := int(math.Sqrt(float64(num)))
+	limit := int(math.Sqrt(float64(value)))
 	for i := 3; i <= limit; i += 2 {
-		if limit%i == 0 {
+		if value%i == 0 {
 			return false
 		}
 	}
