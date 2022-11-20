@@ -11,7 +11,7 @@ func isPrime(value int) bool {
 	}
 	limit := int(math.Sqrt(float64(value)))
 	for i := 3; i <= limit; i += 2 {
-		if value%i == 0 {
+		if (value % i) == 0 {
 			return false
 		}
 	}
