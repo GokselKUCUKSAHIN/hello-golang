@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func fibo(n int64) int64 {
+func fibo(n int) int {
 	if n < 2 {
 		return 1
 	}
@@ -10,7 +10,7 @@ func fibo(n int64) int64 {
 }
 
 func main() {
-	for i := 0; i < 150; i++ {
-		fmt.Println(fibo(int64(i)))
+	for i := 0; i < 50; i++ {
+		fmt.Println(fibo(i))
 	}
 }
