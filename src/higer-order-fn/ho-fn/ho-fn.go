@@ -17,9 +17,11 @@ func ArrReduce(arr []int, fn func(cur int, acc int, arr []int) int, start int) i
 }
 
 func ArrFilter(arr []int, fn func(item int, i int, arr []int) bool) []int {
-	resultArr := make([]int, len(arr))
-	//for i, item := range arr {
-	//
-	//}
+	resultArr := make([]int, 0, len(arr)/2)
+	for i, item := range arr {
+		if fn(item, i, arr) {
+			resultArr = append(resultArr, item)
+		}
+	}
 	return resultArr
 }
