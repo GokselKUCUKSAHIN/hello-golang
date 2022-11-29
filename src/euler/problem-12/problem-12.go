@@ -35,7 +35,7 @@ func getTriangleNumber(limit int) int {
 }
 
 func getNumberDivisors(limit int) []int {
-	divisors := make([]int, 0, 1)
+	divisors := make([]int, 0, 50)
 	for i := 1; i <= limit; i++ {
 		if limit%i == 0 {
 			divisors = append(divisors, i)
@@ -55,17 +55,23 @@ func getNumberOfDivisors(number int) int {
 	return divisorCount
 }
 
-func main() {
+func solution() int {
 	found := false
 	for i := 0; !found; i++ {
 		triangle := getTriangleNumber(i)
 		// triangleDivisors := getNumberDivisors(triangle)
-		// lenDivisiros := len(triangleDivisors)
+		// lenDivisors := len(triangleDivisors)
 		lenDivisors := getNumberOfDivisors(triangle)
 		if lenDivisors >= 500 {
 			found = true
-			triangleDivisors := getNumberDivisors(triangle)
-			fmt.Printf("%d: %d = %v\n", i, triangle, triangleDivisors)
+			// triangleDivisors := getNumberDivisors(triangle)
+			// fmt.Printf("%d: %d = %v\n", i, triangle, triangleDivisors)
+			return triangle
 		}
 	}
+	return -1
+}
+
+func main() {
+	fmt.Println("Solution: ", solution())
 }
