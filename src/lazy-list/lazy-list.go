@@ -4,17 +4,6 @@ import (
 	"fmt"
 )
 
-//type Number interface {
-//	constraints.Integer | constraints.Float
-//}
-
-type Person struct {
-	name    string
-	surname string
-	number  int
-	friends []Person
-}
-
 type Lazy[T any] func() T
 
 type LazyList[T any] struct {
@@ -22,8 +11,8 @@ type LazyList[T any] struct {
 	tail *LazyList[T]
 }
 
-func toListRest[T any](xs ...T) *LazyList[T] {
-	return toList(xs)
+func toListRest[T any](x0 T, xs ...T) *LazyList[T] {
+	return toList(append([]T{x0}, xs...))
 }
 
 func toList[T any](xs []T) *LazyList[T] {
@@ -45,20 +34,54 @@ func printLazy[T any](lazyList *LazyList[T]) {
 	}
 }
 
+func getLazy[T any](lazyList *LazyList[T], index int) Lazy[T] {
+	if index < 0 {
+		return nil
+	}
+	if index == 0 {
+		return lazyList.head
+	}
+	return getLazy(lazyList.tail, index-1)
+}
+
+func lenLazy[T any](lazyList *LazyList[T], count int) int {
+	if lazyList.tail == nil {
+		return count + 1
+	}
+	return lenLazy(lazyList.tail, count+1)
+}
+
+//// not working well
+//func lazyRange(begin int) *LazyList[int] {
+//	return &LazyList[int]{
+//		head: func() int { return begin },
+//		tail: lazyRange(begin + 1),
+//	}
+//}
+//
+//func take[T any](lazyList *LazyList[T], n int) *LazyList[T] {
+//	fmt.Println(lazyList.head())
+//	if lazyList.tail != nil && n >= 0 {
+//		return take(lazyList.tail, n-1)
+//	}
+//	// end of list
+//	return nil
+//}
+
 func ac[T any](values ...T) []T {
 	return values
 }
 
 // Main Function
 func main() {
-	b := Person{name: "Arda", surname: "Küçükşahin", number: 4567}
-	c := Person{name: "Furkan", surname: "Eravşar", number: 7864}
-	a := Person{name: "Göksel", surname: "Küçükşahin", number: 1234, friends: ac(b, c)}
-	fmt.Println(a)
 
-	myLazyList := toListRest(1, 2, 3, 4, 5)
+	myLazyList := toListRest(0, 1, 2, 3, 4, 5, 6, 7, 8)
 	fmt.Println(myLazyList)
-	printLazy(myLazyList)
+	fmt.Println(lenLazy(myLazyList, 0))
+	// printLazy(myLazyList)
+	// fmt.Println(getLazy(myLazyList, 2)())
+	// printLazy(toListRest(1, 2, 3, 4, 5))
+	// printLazy(lazyRange(1))
 }
 
 /*
