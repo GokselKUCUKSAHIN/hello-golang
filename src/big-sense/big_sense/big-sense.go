@@ -24,3 +24,16 @@ func Sub(first *big.Int, second *big.Int) *big.Int {
 func Mul(first *big.Int, second *big.Int) *big.Int {
 	return big.NewInt(0).Mul(first, second)
 }
+
+func MulAll(first *big.Int, rest ...*big.Int) *big.Int {
+	total := big.NewInt(1).Mul(big.NewInt(1), first)
+	size := len(rest)
+	for i := 0; i < size; i++ {
+		total = total.Mul(total, rest[i])
+	}
+	return total
+}
+
+func Div(dividend *big.Int, divisor *big.Int) *big.Int {
+	return big.NewInt(0).Div(dividend, divisor)
+}
