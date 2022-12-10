@@ -8,7 +8,7 @@ import "fmt"
 
 type char = uint8
 
-const vovels = "aeuioAEUIO"
+const vovels = "aiueoAIUEO"
 
 func printMatrix(matrix []string) {
 	for _, row := range matrix {
