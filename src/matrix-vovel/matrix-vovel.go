@@ -53,7 +53,10 @@ func solve(matrix []string) string {
 }
 
 func main() {
-	matrix := []string{"aqrst", "uakei", "ffooo"}
+	matrix := []string{
+		"aqrst",
+		"uakei",
+		"ffooo"}
 	solution := solve(matrix)
 	fmt.Println(solution)
 }
