@@ -8,8 +8,7 @@ func fiboMemo(n int) int {
 	if n < 2 {
 		return 1
 	}
-	value, exist := lru[n]
-	if exist {
+	if value, exist := lru[n]; exist {
 		return value
 	}
 	result := fiboMemo(n-2) + fiboMemo(n-1)
