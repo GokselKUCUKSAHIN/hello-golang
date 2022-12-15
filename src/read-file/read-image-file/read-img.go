@@ -12,7 +12,13 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer catFile.Close()
+	// IIFE
+	defer func(catFile *os.File) {
+		err := catFile.Close()
+		if err != nil {
+			log.Fatal(err)
+		}
+	}(catFile)
 
 	cat, err := png.Decode(catFile)
 	if err != nil {
@@ -24,7 +30,6 @@ func main() {
 	for y := 0; y < w; y++ {
 		for x := 0; x < h; x++ {
 			pixel := cat.At(x, y)
-
 			fmt.Println(pixel)
 		}
 	}
