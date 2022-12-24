@@ -107,12 +107,15 @@ func Map[T, V any](ts []T, fn func(T) V) []V {
 
 func timeConversion(s string) string {
 	// Write your code here
+	// 12:01:45 AM => true
 	isAM := s[8:] == "AM"
-	hour, _ := strconv.ParseInt(s[:2], 10, 32)
-	if (hour >= 12 && isAM) || (hour < 12 && !isAM) {
-		hour = (hour + 12) % 24
+	if hour, err := strconv.ParseInt(s[:2], 10, 32); err != nil {
+		if (hour >= 12 && isAM) || (hour < 12 && !isAM) {
+			hour = (hour + 12) % 24
+		}
+		return fmt.Sprintf("%02d%s", hour, s[2:8])
 	}
-	return fmt.Sprintf("%02d%s", hour, s[2:8])
+	return "err"
 }
 
 func missingNumbers(arr, brr []int32) []int32 {
@@ -125,14 +128,9 @@ func missingNumbers(arr, brr []int32) []int32 {
 	for _, v := range brr {
 		secondMap[v]++
 	}
-
-	// create a slice to store the missing numbers
 	result := make([]int32, 0)
-
-	// iterate over the elements in the second list and check if the frequency is the same in both lists
 	for k, v := range secondMap {
 		if v != firstMap[k] {
-			// frequency is not the same, so add the number to the slice
 			result = append(result, k)
 		}
 	}
@@ -146,17 +144,78 @@ func sockMerchant(n int32, ar []int32) int32 {
 	// Write your code here
 	counts := make(map[int32]int)
 	size := int(n)
-	// Iterate through the array and increment the count for each number
 	for i := 0; i < size; i++ {
 		counts[ar[i]]++
 	}
-	// Initialize a counter for the number of pairs
 	numPairs := 0
-	// Iterate through the counts in the map and add the number of pairs for each count
 	for _, count := range counts {
 		numPairs += count / 2
 	}
 	return int32(numPairs)
+}
+
+func kangaroo(x1 int32, v1 int32, x2 int32, v2 int32) string {
+	// Write your code here
+	if (x1 < x2 && v1 < v2) || (x2 < x1 && v2 < v1) {
+		return "NO"
+	}
+	for i := int32(0); i < 100000; i++ {
+		k1 := x1 + v1*i
+		k2 := x2 + v2*i
+		if k1 == k2 {
+			return "YES"
+		}
+	}
+	return "NO"
+}
+
+func gradeRound(grade int32) int32 {
+	if grade < 38 {
+		return grade
+	}
+	for i := int32(1); i < 3; i++ {
+		rounded := grade + i
+		if rounded%5 == 0 {
+			return rounded
+		}
+	}
+	return grade
+}
+
+func gradingStudents(grades []int32) []int32 {
+	// Write your code here
+	size := len(grades)
+	result := make([]int32, size)
+	for i := 0; i < size; i++ {
+		result[i] = gradeRound(grades[i])
+	}
+	return result
+}
+
+func caesarCipher(s string, k int32) string {
+	// Write your code here
+	size := len(s)
+	chars := []rune(s)
+	for i := 0; i < size; i++ {
+		char := chars[i]
+		if char < 'A' || (char > 'Z' && char < 'a') || char > 'z' {
+			continue
+		}
+		// char += k % 26
+		if char <= 'Z' {
+			// upper case
+			char = (char + k%26) - 'A'
+		}
+		if char > 'z' {
+			// lower case
+			char = 'a' + (char - 'z') - 1
+		} else if char >= 'Z' && char < 'a' {
+			// upper case
+			char = 'A' + (char - 'Z') - 1
+		}
+		chars[i] = char
+	}
+	return string(chars)
 }
 
 func main() {
@@ -174,4 +233,27 @@ func main() {
 
 	socks := []int32{10, 20, 20, 10, 10, 30, 50, 10, 20}
 	fmt.Println(sockMerchant(int32(len(socks)), socks))
+
+	fmt.Println(kangaroo(0, 3, 4, 2)) // yes
+	fmt.Println(kangaroo(0, 2, 5, 3)) // no
+
+	grades := []int32{4, 73, 67, 38, 33}
+	fmt.Println(gradingStudents(grades))
+
+	//openText := "middle-Outz"
+	//openText := "!m-rB`-oN!.W`cLAcVbN/CqSoolII!SImji.!w/`Xu`uZa1TWPRq`uRBtok`xPT`lL-zPTc.BSRIhu..-!.!tcl!-U"
+	//fmt.Println(caesarCipher(openText, 62))
+	//fmt.Println("!w-bL`-yX!.G`mVKmFlX/MaCyyvSS!CSwts.!g/`He`eJk1DGZBa`eBLdyu`hZD`vV-jZDm.LCBSre..-!.!dmv!-E")
+	for i := 65; i < 122; i++ {
+		fmt.Printf("%3d: '%c' = [ %08b ]\n", i, i, i)
+	}
+
+	fmt.Println(strconv.Atoi("10"))
 }
+
+/*
+!w-bL`-yX!.G`mVKmFlX/MaCyyvSS!CSwts.!g/`He`eJk1DGZBa`eBLdyu`hZD`vV-jZDm.LCBSre..-!.!dmv!-E
+!w-bL`-yX!.a`mVKmFlX/MaCyyvSS!CSwts.!g/`be`edk1Da@Ba`eBLdyu`h@D`vV-j@Dm.LCBSre..-!.!dmv!-E
+!w-bL`-yX!.a`mVAmFlX/MaCyyvSS!CSwts.!g/`be`eZa1Da@Ba`eBLdyu`h@D`vV-z@Dm.LCBSre..-!.!dmv!-E
+
+*/
