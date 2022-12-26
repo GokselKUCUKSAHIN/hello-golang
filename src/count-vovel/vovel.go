@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"io"
 	"os"
 	"strings"
 )
@@ -26,12 +27,25 @@ func takeInputFromUser(prompt string) (string, error) {
 	return line, nil
 }
 
+func CreateInputPrompt(rd io.Reader) func(string) (string, error) {
+	in := bufio.NewReader(rd)
+	return func(prompt string) (string, error) {
+		fmt.Print(prompt)
+		line, err := in.ReadString('\n')
+		if err != nil {
+			return "", err
+		}
+		return line, nil
+	}
+}
+
 func isVovel(char int32) bool {
 	return char == 'a' || char == 'e' || char == 'u' || char == 'i' || char == 'o'
 }
 
 func main() {
-	message, _ := takeInputFromUser("Enter a text-> ")
+	inputPrompt := CreateInputPrompt(os.Stdin)
+	message, _ := inputPrompt("Enter a text-> ")
 	lowerMessage := strings.ToLower(message)
 	vovel, consonant := 0, 0
 	for _, char := range lowerMessage {

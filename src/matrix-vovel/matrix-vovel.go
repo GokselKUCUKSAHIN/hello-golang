@@ -23,9 +23,9 @@ func getSize(arr []string) (int, int) {
 	return len(arr), len(arr[0])
 }
 
-func isVovel(chr char) bool {
-	for _, item := range []char(vovels) {
-		if item == chr {
+func isVovel(chr uint8) bool {
+	for _, item := range vovels {
+		if uint8(item) == chr {
 			return true
 		}
 	}
