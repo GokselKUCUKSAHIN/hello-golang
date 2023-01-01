@@ -159,19 +159,44 @@ func sockMerchant(n int32, ar []int32) int32 {
 	return int32(numPairs)
 }
 
+func countingValleys(steps int32, path string) int32 {
+	// Write your code here
+	var valleyCount, level, valleyFlag = 0, 0, false
+	for _, v := range path {
+		if v == 'D' {
+			next := level - 1
+			if !valleyFlag && next < 0 {
+				valleyFlag = true
+			}
+			level = next
+		} else {
+			// U
+			next := level + 1
+			if valleyFlag && next >= 0 {
+				valleyFlag = false
+				valleyCount++
+			}
+			level = next
+		}
+	}
+	return int32(valleyCount)
+}
+
 func main() {
-	fmt.Println(compareTriplets([]int32{17, 28, 30}, []int32{99, 16, 8}))
-	staircase(6)
-	fmt.Println(timeConversion("12:01:45PM"))
-	fmt.Println(timeConversion("12:01:45AM"))
-	fmt.Println(timeConversion("07:05:45PM"))
+	//fmt.Println(compareTriplets([]int32{17, 28, 30}, []int32{99, 16, 8}))
+	//staircase(6)
+	//fmt.Println(timeConversion("12:01:45PM"))
+	//fmt.Println(timeConversion("12:01:45AM"))
+	//fmt.Println(timeConversion("07:05:45PM"))
+	//
+	//// var arr, brr = []int32{7, 2, 5, 3, 5, 3}, []int32{7, 2, 5, 4, 6, 3, 5, 3}
+	//var arr, brr = []int32{203, 204, 205, 206, 207, 208, 203, 204, 205, 206},
+	//	[]int32{203, 204, 204, 205, 206, 207, 205, 208, 203, 206, 205, 206, 204}
+	//
+	//fmt.Println(missingNumbers(arr, brr))
+	//
+	//socks := []int32{10, 20, 20, 10, 10, 30, 50, 10, 20}
+	//fmt.Println(sockMerchant(int32(len(socks)), socks))
 
-	// var arr, brr = []int32{7, 2, 5, 3, 5, 3}, []int32{7, 2, 5, 4, 6, 3, 5, 3}
-	var arr, brr = []int32{203, 204, 205, 206, 207, 208, 203, 204, 205, 206},
-		[]int32{203, 204, 204, 205, 206, 207, 205, 208, 203, 206, 205, 206, 204}
-
-	fmt.Println(missingNumbers(arr, brr))
-
-	socks := []int32{10, 20, 20, 10, 10, 30, 50, 10, 20}
-	fmt.Println(sockMerchant(int32(len(socks)), socks))
+	fmt.Println(countingValleys(8, "UDDDUDUU"))
 }
