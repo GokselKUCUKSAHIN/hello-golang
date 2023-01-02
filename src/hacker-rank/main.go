@@ -2,8 +2,10 @@ package main
 
 import (
 	"fmt"
+	"math"
 	"sort"
 	"strconv"
+	"strings"
 )
 
 func compareTriplets(a []int32, b []int32) []int32 {
@@ -218,37 +220,89 @@ func caesarCipher(s string, k int32) string {
 	return string(chars)
 }
 
-func main() {
-	fmt.Println(compareTriplets([]int32{17, 28, 30}, []int32{99, 16, 8}))
-	staircase(6)
-	fmt.Println(timeConversion("12:01:45PM"))
-	fmt.Println(timeConversion("12:01:45AM"))
-	fmt.Println(timeConversion("07:05:45PM"))
-
-	// var arr, brr = []int32{7, 2, 5, 3, 5, 3}, []int32{7, 2, 5, 4, 6, 3, 5, 3}
-	var arr, brr = []int32{203, 204, 205, 206, 207, 208, 203, 204, 205, 206},
-		[]int32{203, 204, 204, 205, 206, 207, 205, 208, 203, 206, 205, 206, 204}
-
-	fmt.Println(missingNumbers(arr, brr))
-
-	socks := []int32{10, 20, 20, 10, 10, 30, 50, 10, 20}
-	fmt.Println(sockMerchant(int32(len(socks)), socks))
-
-	fmt.Println(kangaroo(0, 3, 4, 2)) // yes
-	fmt.Println(kangaroo(0, 2, 5, 3)) // no
-
-	grades := []int32{4, 73, 67, 38, 33}
-	fmt.Println(gradingStudents(grades))
-
-	//openText := "middle-Outz"
-	//openText := "!m-rB`-oN!.W`cLAcVbN/CqSoolII!SImji.!w/`Xu`uZa1TWPRq`uRBtok`xPT`lL-zPTc.BSRIhu..-!.!tcl!-U"
-	//fmt.Println(caesarCipher(openText, 62))
-	//fmt.Println("!w-bL`-yX!.G`mVKmFlX/MaCyyvSS!CSwts.!g/`He`eJk1DGZBa`eBLdyu`hZD`vV-jZDm.LCBSre..-!.!dmv!-E")
-	for i := 65; i < 122; i++ {
-		fmt.Printf("%3d: '%c' = [ %08b ]\n", i, i, i)
+func countingValleys(steps int32, path string) int32 {
+	// Write your code here
+	var valleyCount, level, valleyFlag = 0, 0, false
+	for _, v := range path {
+		if v == 'D' {
+			next := level - 1
+			if !valleyFlag && next < 0 {
+				valleyFlag = true
+			}
+			level = next
+		} else {
+			// U
+			next := level + 1
+			if valleyFlag && next >= 0 {
+				valleyFlag = false
+				valleyCount++
+			}
+			level = next
+		}
 	}
+	return int32(valleyCount)
+}
 
-	fmt.Println(strconv.Atoi("10"))
+func valleyPermutation(count int) []string {
+	size := int(math.Pow(2, float64(count)))
+	permutations := make([]string, size, size)
+	for i := 0; i < size; i++ {
+		binary := fmt.Sprintf(fmt.Sprintf("%c0%db", '%', count), i)
+		downs := strings.ReplaceAll(binary, "0", "D")
+		ups := strings.ReplaceAll(downs, "1", "U")
+		permutations[i] = ups
+	}
+	return permutations
+}
+
+func main() {
+	//fmt.Println(compareTriplets([]int32{17, 28, 30}, []int32{99, 16, 8}))
+	//staircase(6)
+	//fmt.Println(timeConversion("12:01:45PM"))
+	//fmt.Println(timeConversion("12:01:45AM"))
+	//fmt.Println(timeConversion("07:05:45PM"))
+	//
+	//// var arr, brr = []int32{7, 2, 5, 3, 5, 3}, []int32{7, 2, 5, 4, 6, 3, 5, 3}
+	//var arr, brr = []int32{203, 204, 205, 206, 207, 208, 203, 204, 205, 206},
+	//	[]int32{203, 204, 204, 205, 206, 207, 205, 208, 203, 206, 205, 206, 204}
+	//
+	//fmt.Println(missingNumbers(arr, brr))
+	//
+	//socks := []int32{10, 20, 20, 10, 10, 30, 50, 10, 20}
+	//fmt.Println(sockMerchant(int32(len(socks)), socks))
+	//
+	//fmt.Println(kangaroo(0, 3, 4, 2)) // yes
+	//fmt.Println(kangaroo(0, 2, 5, 3)) // no
+	//
+	//grades := []int32{4, 73, 67, 38, 33}
+	//fmt.Println(gradingStudents(grades))
+	//
+	////openText := "middle-Outz"
+	////openText := "!m-rB`-oN!.W`cLAcVbN/CqSoolII!SImji.!w/`Xu`uZa1TWPRq`uRBtok`xPT`lL-zPTc.BSRIhu..-!.!tcl!-U"
+	////fmt.Println(caesarCipher(openText, 62))
+	////fmt.Println("!w-bL`-yX!.G`mVKmFlX/MaCyyvSS!CSwts.!g/`He`eJk1DGZBa`eBLdyu`hZD`vV-jZDm.LCBSre..-!.!dmv!-E")
+	//for i := 65; i < 122; i++ {
+	//	fmt.Printf("%3d: '%c' = [ %08b ]\n", i, i, i)
+	//}
+	//
+	//fmt.Println(strconv.Atoi("10"))
+
+	// fmt.Println(countingValleys(8, "UDDDUDUU"))
+	// fmt.Println(valleyPermutation(8))
+	var exist, notExist = 0, 0
+	allPermutation := valleyPermutation(16)
+	for _, path := range allPermutation {
+		count := countingValleys(-1, path)
+		if count == 7 {
+			exist++
+		} else {
+			notExist++
+		}
+	}
+	fmt.Printf("exist: %3d, not-exist: %3d\n", exist, notExist)
+	fmt.Printf("%d", 0b0101010101010101)
+	// _				_
+	//  \/\/\/\/\/\/\/\/
 }
 
 /*
