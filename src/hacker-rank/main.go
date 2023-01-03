@@ -255,59 +255,23 @@ func valleyPermutation(count int) []string {
 	return permutations
 }
 
-func main() {
-	//fmt.Println(compareTriplets([]int32{17, 28, 30}, []int32{99, 16, 8}))
-	//staircase(6)
-	//fmt.Println(timeConversion("12:01:45PM"))
-	//fmt.Println(timeConversion("12:01:45AM"))
-	//fmt.Println(timeConversion("07:05:45PM"))
-	//
-	//// var arr, brr = []int32{7, 2, 5, 3, 5, 3}, []int32{7, 2, 5, 4, 6, 3, 5, 3}
-	//var arr, brr = []int32{203, 204, 205, 206, 207, 208, 203, 204, 205, 206},
-	//	[]int32{203, 204, 204, 205, 206, 207, 205, 208, 203, 206, 205, 206, 204}
-	//
-	//fmt.Println(missingNumbers(arr, brr))
-	//
-	//socks := []int32{10, 20, 20, 10, 10, 30, 50, 10, 20}
-	//fmt.Println(sockMerchant(int32(len(socks)), socks))
-	//
-	//fmt.Println(kangaroo(0, 3, 4, 2)) // yes
-	//fmt.Println(kangaroo(0, 2, 5, 3)) // no
-	//
-	//grades := []int32{4, 73, 67, 38, 33}
-	//fmt.Println(gradingStudents(grades))
-	//
-	////openText := "middle-Outz"
-	////openText := "!m-rB`-oN!.W`cLAcVbN/CqSoolII!SImji.!w/`Xu`uZa1TWPRq`uRBtok`xPT`lL-zPTc.BSRIhu..-!.!tcl!-U"
-	////fmt.Println(caesarCipher(openText, 62))
-	////fmt.Println("!w-bL`-yX!.G`mVKmFlX/MaCyyvSS!CSwts.!g/`He`eJk1DGZBa`eBLdyu`hZD`vV-jZDm.LCBSre..-!.!dmv!-E")
-	//for i := 65; i < 122; i++ {
-	//	fmt.Printf("%3d: '%c' = [ %08b ]\n", i, i, i)
-	//}
-	//
-	//fmt.Println(strconv.Atoi("10"))
-
-	// fmt.Println(countingValleys(8, "UDDDUDUU"))
-	// fmt.Println(valleyPermutation(8))
-	var exist, notExist = 0, 0
-	allPermutation := valleyPermutation(16)
-	for _, path := range allPermutation {
-		count := countingValleys(-1, path)
-		if count == 7 {
-			exist++
-		} else {
-			notExist++
+func bonAppetit(bill []int32, k int32, b int32) {
+	// Write your code here
+	var sum int32 = 0
+	for i := 0; i < len(bill); i++ {
+		if int32(i) != k {
+			sum += bill[i]
 		}
 	}
-	fmt.Printf("exist: %3d, not-exist: %3d\n", exist, notExist)
-	fmt.Printf("%d", 0b0101010101010101)
-	// _				_
-	//  \/\/\/\/\/\/\/\/
+	diff := b - sum/2
+	if diff == 0 {
+		fmt.Println("Bon Appetit")
+		return
+	}
+	fmt.Println(diff)
 }
 
-/*
-!w-bL`-yX!.G`mVKmFlX/MaCyyvSS!CSwts.!g/`He`eJk1DGZBa`eBLdyu`hZD`vV-jZDm.LCBSre..-!.!dmv!-E
-!w-bL`-yX!.a`mVKmFlX/MaCyyvSS!CSwts.!g/`be`edk1Da@Ba`eBLdyu`h@D`vV-j@Dm.LCBSre..-!.!dmv!-E
-!w-bL`-yX!.a`mVAmFlX/MaCyyvSS!CSwts.!g/`be`eZa1Da@Ba`eBLdyu`h@D`vV-z@Dm.LCBSre..-!.!dmv!-E
-
-*/
+func main() {
+	bonAppetit([]int32{3, 10, 2, 9}, 1, 7)
+	bonAppetit([]int32{3, 10, 2, 9}, 1, 14)
+}
