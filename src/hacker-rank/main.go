@@ -271,7 +271,24 @@ func bonAppetit(bill []int32, k int32, b int32) {
 	fmt.Println(diff)
 }
 
+func breakingRecords(scores []int32) []int32 {
+	// Write your code here
+	result := []int32{0, 0}
+	var min, max = scores[0], scores[0]
+	for i := 1; i < len(scores); i++ {
+		current := scores[i]
+		if current > max {
+			max = current
+			result[0]++
+		}
+		if current < min {
+			min = current
+			result[1]++
+		}
+	}
+	return result
+}
+
 func main() {
-	bonAppetit([]int32{3, 10, 2, 9}, 1, 7)
-	bonAppetit([]int32{3, 10, 2, 9}, 1, 14)
+	fmt.Println(breakingRecords([]int32{3, 4, 21, 36, 10, 28, 35, 5, 24, 42}))
 }
