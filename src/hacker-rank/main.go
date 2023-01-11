@@ -289,6 +289,50 @@ func breakingRecords(scores []int32) []int32 {
 	return result
 }
 
+func twoSum(nums []int, target int) []int {
+	result := []int{0, 1}
+	if len(nums) == 2 {
+		return result
+	}
+	isNeg := target < 0
+	expected := 0
+	for i := 0; i < len(nums)-1; i++ {
+		first := nums[i]
+		if !isNeg && first > target || isNeg && first < target {
+			continue
+		}
+		expected = target - first
+		for j := 1; j < len(nums); j++ {
+			if i == j {
+				continue
+			}
+			if nums[j] == expected {
+				result = []int{i, j}
+				return result
+			}
+		}
+	}
+	return result
+}
+
+func twoSumOg(nums []int, target int) []int {
+	if len(nums) == 2 {
+		return []int{0, 1}
+	}
+	for i := 0; i < len(nums)-1; i++ {
+		for j := 0; j < len(nums); j++ {
+			sum := nums[i] + nums[j]
+			if sum == target {
+				return []int{i, j}
+			}
+		}
+	}
+	panic("No Solution")
+}
+
 func main() {
-	fmt.Println(breakingRecords([]int32{3, 4, 21, 36, 10, 28, 35, 5, 24, 42}))
+	// fmt.Println(breakingRecords([]int32{3, 4, 21, 36, 10, 28, 35, 5, 24, 42}))
+	//arr := []int{11, 2, 0, 15, 7, 0}
+	arr := []int{-1, -2, -3, -4, -5}
+	fmt.Println(twoSumOg(arr, -8))
 }
