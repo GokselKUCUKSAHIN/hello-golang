@@ -15,7 +15,7 @@ func FilterNoSQLInjection(rawInput string) string {
 	return rawInput
 }
 
-// https://stage-product-spda-search-api-service.earth.trendyol.com/spm/categories?supplierId=2748&culture=tr-TR"}},{"wildcard":{"content.lastModifiedBy":{"value":"quok*"}}},{"term":{"content.culture":"tr-TR
+// https://xyz-abc-api-serv.alpha-century.x.com/obs/ctgr?si=2748&c=TR"}},{"wc":{"c.lmd":{"value":"q*"}}},{"tm":{"c.cl":"TR
 
 func main() {
 	testStr := "tr-TR\"}},{\"wildcard\":{\"content.lastModifiedBy\":{\"value\":\"quok*\"}}},{\"term\":{\"content.culture\":\"tr-TR"
