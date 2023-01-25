@@ -330,9 +330,29 @@ func twoSumOg(nums []int, target int) []int {
 	panic("No Solution")
 }
 
+func migratoryBirds(arr []int32) int32 {
+	birdCounts := make([]int32, 5, 5)
+	for i := 0; i < len(arr); i++ {
+		birdType := arr[i] - 1
+		birdCounts[birdType]++
+	}
+	maxVal := birdCounts[0]
+	result := 0
+	for i := 1; i < 5; i++ {
+		if birdCounts[i] > maxVal {
+			result = i
+			maxVal = birdCounts[i]
+		}
+	}
+	return int32(result) + 1
+}
+
 func main() {
 	// fmt.Println(breakingRecords([]int32{3, 4, 21, 36, 10, 28, 35, 5, 24, 42}))
 	//arr := []int{11, 2, 0, 15, 7, 0}
-	arr := []int{-1, -2, -3, -4, -5}
-	fmt.Println(twoSumOg(arr, -8))
+	//arr := []int{-1, -2, -3, -4, -5}
+	//fmt.Println(twoSumOg(arr, -8))
+	arr := []int32{1, 2, 3, 4, 5, 4, 3, 2, 1, 3, 4}
+	result := migratoryBirds(arr)
+	fmt.Println(result)
 }
