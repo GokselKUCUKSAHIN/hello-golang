@@ -359,12 +359,32 @@ func catAndMouse(x int32, y int32, z int32) string {
 	}
 }
 
+func getMoneySpent(keyboards []int32, drives []int32, b int32) int32 {
+	sort.Slice(keyboards, func(i, j int) bool {
+		return keyboards[i] < keyboards[j]
+	})
+	sort.Slice(drives, func(i, j int) bool {
+		return drives[i] < drives[j]
+	})
+	if (keyboards[0] + drives[0]) > b {
+		return -1
+	}
+	best := keyboards[0] + drives[0]
+	for i := len(keyboards) - 1; i >= 0; i-- {
+		for j := len(drives) - 1; j >= 0; j-- {
+			sum := keyboards[i] + drives[j]
+			if sum > best && sum <= b {
+				best = sum
+			}
+		}
+	}
+	return best
+}
+
 func main() {
-	// fmt.Println(breakingRecords([]int32{3, 4, 21, 36, 10, 28, 35, 5, 24, 42}))
-	//arr := []int{11, 2, 0, 15, 7, 0}
-	//arr := []int{-1, -2, -3, -4, -5}
-	//fmt.Println(twoSumOg(arr, -8))
-	arr := []int32{1, 2, 3, 4, 5, 4, 3, 2, 1, 3, 4}
-	result := migratoryBirds(arr)
-	fmt.Println(result)
+	keyb := []int32{1, 3, 5}
+	drive := []int32{2, 5, 8, 14}
+	res := getMoneySpent(keyb, drive, 14)
+	fmt.Println(res)
+	fmt.Printf("\a")
 }
