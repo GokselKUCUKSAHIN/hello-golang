@@ -347,6 +347,18 @@ func migratoryBirds(arr []int32) int32 {
 	return int32(result) + 1
 }
 
+func catAndMouse(x int32, y int32, z int32) string {
+	deltaCatAMouseC := math.Abs(float64(z - x))
+	deltaCatBMouseC := math.Abs(float64(z - y))
+	if deltaCatAMouseC < deltaCatBMouseC {
+		return "Cat A"
+	} else if deltaCatBMouseC < deltaCatAMouseC {
+		return "Cat B"
+	} else {
+		return "Mouse C"
+	}
+}
+
 func main() {
 	// fmt.Println(breakingRecords([]int32{3, 4, 21, 36, 10, 28, 35, 5, 24, 42}))
 	//arr := []int{11, 2, 0, 15, 7, 0}
